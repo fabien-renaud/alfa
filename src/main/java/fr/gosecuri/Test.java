@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class Test {
+
+    private static FirebaseDatabase firebaseDatabase;
 
     public static void main(String... args) throws IOException {
         FileInputStream serviceAccount = new FileInputStream("src/main/resources/alfa-126f6-a24dbb95e4c2.json");
@@ -23,14 +26,15 @@ public class Test {
 
         FirebaseApp.initializeApp(options);
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference ref = db.getReference();
+        update("montest");
 
+        /*
         Map<String, User> users = new HashMap();
         users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
 
-        ref.child("users").setValueAsync(users);
+        ref.child("users").setValueAsync(users);*/
 
         /*try {
             Connection conn = DriverManager.getConnection("jdbc:mariadb://adriennas.synology.me:3307/", "alfa", "alfa2019");
@@ -52,5 +56,35 @@ public class Test {
         } catch (SQLException e) {
             e.printStackTrace();
         }*/
+    }
+
+    public static void update(Object value) {
+        update(value, "testdata");
+    }
+
+    public static void update(Object value, String key) {
+        try {
+            DatabaseReference ref = firebaseDatabase.getReference(key);
+            final CountDownLatch latch = new CountDownLatch(1);
+            ref.setValue(value, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        latch.countDown();
+                    } else {
+                        System.out.println("Data saved successfully.");
+                        latch.countDown();
+                    }
+                }
+            });
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void close() {
+        firebaseDatabase.getApp().delete();
     }
 }
