@@ -1,4 +1,4 @@
-package fr.gosecuri.view2;
+package fr.gosecuri.view;
 
 import javax.swing.*;
 
@@ -6,19 +6,18 @@ public class StoragePage extends JPanel {
     private int buttonWidth = 100;
     private int buttonHeight = 40;
     private String buttonName = "Se déconnecter";
-    private JButton button;
+    private JButton switchButton;
 
     public StoragePage() {
-        button = new JButton(buttonName);
-        button.setBounds(50, 50, buttonWidth, buttonHeight);
+        switchButton = new JButton(buttonName);
+        switchButton.setBounds(50, 50, buttonWidth, buttonHeight);
 
-        add(button);
+        add(switchButton);
     }
 
     public int getButtonWidth() {
         return buttonWidth;
     }
-
     public void setButtonWidth(int buttonWidth) {
         this.buttonWidth = buttonWidth;
     }
@@ -26,7 +25,6 @@ public class StoragePage extends JPanel {
     public int getButtonHeight() {
         return buttonHeight;
     }
-
     public void setButtonHeight(int buttonHeight) {
         this.buttonHeight = buttonHeight;
     }
@@ -34,16 +32,14 @@ public class StoragePage extends JPanel {
     public String getButtonName() {
         return buttonName;
     }
-
     public void setButtonName(String buttonName) {
         this.buttonName = buttonName;
     }
 
-    public JButton getButton() {
-        return button;
+    public JButton getSwitchButton() {
+        return switchButton;
     }
-
-    public void setButton(JButton button) {
-        this.button = button;
+    public void setSwitchButton(JButton switchButton) {
+        this.switchButton = switchButton;
     }
 }
