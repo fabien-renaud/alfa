@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
+import fr.gosecuri.config.Property;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,18 +18,16 @@ public class Test {
     private static FirebaseDatabase firebaseDatabase;
 
     public static void main(String... args) throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/alfa-126f6-a24dbb95e4c2.json");
+        FileInputStream serviceAccount = new FileInputStream(Property.getProperty("firebase.serviceAccount"));
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://alfa-126f6.firebaseio.com/")
+                .setDatabaseUrl(Property.getProperty("firebase.url"))
                 .build();
 
         FirebaseApp.initializeApp(options);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-        update("montest");
 
         /*
         Map<String, User> users = new HashMap();
@@ -58,11 +57,7 @@ public class Test {
         }*/
     }
 
-    public static void update(Object value) {
-        update(value, "testdata");
-    }
-
-    public static void update(Object value, String key) {
+    /*public static void update(Object value, String key) {
         try {
             DatabaseReference ref = firebaseDatabase.getReference(key);
             final CountDownLatch latch = new CountDownLatch(1);
@@ -82,7 +77,7 @@ public class Test {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void close() {
         firebaseDatabase.getApp().delete();
