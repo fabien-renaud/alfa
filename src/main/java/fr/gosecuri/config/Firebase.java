@@ -80,7 +80,7 @@ abstract public class Firebase {
 
     }
 
-    public String get(String key) {
+    public void get(String key) {
 
         DatabaseReference ref = firebaseDatabase.getReference(getClassName() + "/" + key);
         ref.addValueEventListener(new ValueEventListener() {
