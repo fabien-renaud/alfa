@@ -9,11 +9,11 @@ public class App {
         /*User user = new User();
         user.update("test", "test");*/
 
-        Kit kit = new Kit();
-        kit.store("lampe torche", 5);
+        Kit kit = new Kit("lampe torche");
 
         //kit.delete("lampe torche");
 
         kit.get("brassard de sécurité");
+        System.out.println(kit.retrieveData);
     }
 }

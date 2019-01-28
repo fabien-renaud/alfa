@@ -13,26 +13,28 @@ import java.util.concurrent.CountDownLatch;
 abstract public class Firebase {
     private static FirebaseDatabase firebaseDatabase;
 
-    private Object retrieveData;
+    public Object retrieveData;
 
     public Firebase() {
         if (this.firebaseDatabase == null) {
+            connection();
+        }
+    }
 
-            try {
-                FileInputStream serviceAccount = new FileInputStream(Property.getProperty("firebase.serviceAccount"));
+    private void connection() {
+        try {
+            FileInputStream serviceAccount = new FileInputStream(Property.getProperty("firebase.serviceAccount"));
 
-                FirebaseOptions options = new FirebaseOptions.Builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .setDatabaseUrl(Property.getProperty("firebase.url"))
-                        .build();
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl(Property.getProperty("firebase.url"))
+                    .build();
 
-                FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
 
-                this.firebaseDatabase = FirebaseDatabase.getInstance();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-
+            this.firebaseDatabase = FirebaseDatabase.getInstance();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -78,13 +80,13 @@ abstract public class Firebase {
 
     }
 
-    public Object get(String key) {
+    public String get(String key) {
 
         DatabaseReference ref = firebaseDatabase.getReference(getClassName() + "/" + key);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
+                System.out.println(dataSnapshot.getValue(String.class));
                 retrieveData = dataSnapshot.getValue();
             }
 
@@ -93,8 +95,5 @@ abstract public class Firebase {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-
-        return retrieveData;
     }
 }
