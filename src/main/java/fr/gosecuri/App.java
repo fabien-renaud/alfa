@@ -5,11 +5,10 @@ import fr.gosecuri.model.User;
 public class App {
     public static void main(String... args) {
         //new MainPage();
-
-        /*User user = new User();
-        user.update("test", "test");*/
-
+        
         Kit kit = new Kit("lampe torche");
+        kit.addItem(5);
+        kit.takeItem(4);
 
         //kit.delete("lampe torche");
 
