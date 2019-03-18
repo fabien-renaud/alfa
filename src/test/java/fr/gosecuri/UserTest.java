@@ -9,5 +9,4 @@ public class UserTest {
         User user = new User("01/01/2000","Full Name");
         assertEquals("User created", "Full Name", user.full_name);
     }
-
 }
