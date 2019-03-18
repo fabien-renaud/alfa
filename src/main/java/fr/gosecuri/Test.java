@@ -31,26 +31,5 @@ public class Test {
         users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
 
         ref.child("users").setValueAsync(users);
-
-        /*try {
-            Connection conn = DriverManager.getConnection("jdbc:mariadb://adriennas.synology.me:3307/", "alfa", "alfa2019");
-            // create a Statement
-            try {
-                Statement stmt = conn.createStatement();
-                //execute query
-                try {
-                    ResultSet rs = stmt.executeQuery("SELECT 'Hello World!'");
-                    //position result to first
-                    rs.first();
-                    System.out.println(rs.getString(1)); //result is "Hello World!"
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 }
