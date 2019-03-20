@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
+import fr.gosecuri.model.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class Test {
         DatabaseReference ref = db.getReference();
 
         Map<String, User> users = new HashMap();
-        users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
+        users.put("alanisawesome", new User("Hello", "World", ""));
 
         ref.child("users").setValueAsync(users);
     }
