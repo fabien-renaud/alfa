@@ -32,14 +32,14 @@ public class AuthenticationController {
         switchToPage(MainPage.AUTHENTICATION_PAGE);
 
         authenticationPage.getLoginButton().addActionListener((e) -> {
-            try {
-                // Write picture
-                ImageIO.write(authenticationPage.getWebcamPanel().getImage(), "PNG", new File(Property.getProperty("azure.filePicture")));
-
-                this.detectFace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+//            try {
+//                // Write picture
+//                ImageIO.write(authenticationPage.getWebcamPanel().getImage(), "PNG", new File(Property.getProperty("azure.filePicture")));
+//
+//                this.detectFace();
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            }
         });
     }
 
@@ -64,41 +64,41 @@ public class AuthenticationController {
     /**
      * Delete the face after capture
      */
-    public void detectFace() {
-
-        try {
-            // Create new http request to azure face
-            AzureFace azureFace = new AzureFace("/detect", "application/octet-stream");
-
-            // Request body
-            File file = new File(Property.getProperty("azure.filePicture"));
-            FileInputStream targetStream = new FileInputStream(file);
-            byte[] bytes = new byte[(int) file.length()];
-
-            targetStream.read(bytes);
-            ByteArrayEntity bodyEntity = new ByteArrayEntity(bytes, ContentType.APPLICATION_OCTET_STREAM);
-
-            // Execute request and get result
-            String res = azureFace.post(bodyEntity);
-
-            // Create the JSON
-            System.out.println(res);
-            if (res.charAt(0) == '[') {
-                JSONArray jsonRes = new JSONArray(res);
-
-                if (jsonRes.length() > 0) {
-                    JSONObject jsonObject = jsonRes.getJSONObject(0);
-                    this.findUser(jsonObject.get("faceId").toString());
-                } else {
-                    this.authenticationPage.getErrorMessage().setText("Aucun visage identifié !");
-                }
-
-            }
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void detectFace() {
+//
+//        try {
+//            // Create new http request to azure face
+//            AzureFace azureFace = new AzureFace("/detect", "application/octet-stream");
+//
+//            // Request body
+//            File file = new File(Property.getProperty("azure.filePicture"));
+//            FileInputStream targetStream = new FileInputStream(file);
+//            byte[] bytes = new byte[(int) file.length()];
+//
+//            targetStream.read(bytes);
+//            ByteArrayEntity bodyEntity = new ByteArrayEntity(bytes, ContentType.APPLICATION_OCTET_STREAM);
+//
+//            // Execute request and get result
+//            String res = azureFace.post(bodyEntity);
+//
+//            // Create the JSON
+//            System.out.println(res);
+//            if (res.charAt(0) == '[') {
+//                JSONArray jsonRes = new JSONArray(res);
+//
+//                if (jsonRes.length() > 0) {
+//                    JSONObject jsonObject = jsonRes.getJSONObject(0);
+//                    this.findUser(jsonObject.get("faceId").toString());
+//                } else {
+//                    this.authenticationPage.getErrorMessage().setText("Aucun visage identifié !");
+//                }
+//
+//            }
+//
+//        } catch (IOException | URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Find a user who correspond to the face detected
