@@ -1,12 +1,14 @@
 package fr.gosecuri;
 
-import static org.junit.Assert.assertEquals;
+import fr.gosecuri.model.User;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class UserTest {
     @Test
     public void createUser() {
-        User user = new User("01/01/2000","Full Name");
-        assertEquals("User created", "Full Name", user.full_name);
+//        Assert.assertTrue(true);
+        User user = new User("Hello", "World", "");
+        Assert.assertEquals("User created", "Hello", user.getFirstname());
     }
 }
